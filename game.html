@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="customer">お客さん「カフェラテください」</div>
+<div id="cup"></div>
+
+<button onclick="addToCup('milk')">ミルク</button>
+<button onclick="addToCup('espresso')">エスプレッソ</button>
+<button onclick="addToCup('straw')">ストロー</button>
+<button onclick="serveDrink()">提供する</button>
+
+<script>
+    let cup = [];
+
+function addToCup(ingredient) {
+  cup.push(ingredient);
+  document.getElementById('cup').innerText = 'カップ: ' + cup.join(', ');
+}
+
+function serveDrink() {
+  const order = ['milk', 'espresso', 'straw'];
+  if (JSON.stringify(cup) === JSON.stringify(order)) {
+    alert('正解！カフェラテ完成！');
+  } else {
+    alert('ちがいます！やり直してね');
+  }
+  cup = [];
+  document.getElementById('cup').innerText = '';
+}
+
+</script>
+</body>
+</html>

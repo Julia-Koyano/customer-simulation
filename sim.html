@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>接客シミュレーション</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="quiz-page">
+<div class="background">
+  <div class="top-stripes"></div>
+
+  <div class="back-to-home">
+    <a href="index.html" class="home-button">
+      <img src="bookmark.png" alt="Home" />
+      <span class="home-label">HOME</span>
+    </a>
+  </div>
+
+  <div class="header">
+    <h1>接客シミュレーション</h1>
+    <p>Practice customer interactions through simulation.</p>
+  </div>
+
+  <div id="conversation" class="question"></div>
+  <button id="restartBtn" style="display:none;">Reset</button>
+  <div id="options" class="question"></div>
+
+  <div class="bottom-stripes"></div>
+</div>
+
+<script>
+const conversation = document.getElementById("conversation");
+const options = document.getElementById("options");
+
+const steps = {
+  start: {
+    message: "いらっしゃいませ",
+    en: "Welcome.",
+    audio: "voice/58 (4).wav",
+    options: [
+      { text: "ミラノサンドください", en: "I'd like a Milano sandwich, please.", next: "milano" },
+      { text: "コーヒーください", en: "I'd like a coffee, please.", next: "coffee_type" }
+    ]
+  },
+  coffee_type: {
+    message: "ホットとアイスがございます",
+    en: "We have hot and iced.",
+    audio: "voice/58 (5).wav",
+    options: [
+      { text: "ホット", en: "Hot, please.", next: "coffee_size" },
+      { text: "アイス", en: "Iced, please.", next: "coffee_size" }
+    ]
+  },
+  coffee_size: {
+    message: "サイズはいかがなさいますか？",
+    en: "What size would you like?",
+    audio: "voice/58 (6).wav",
+    options: [
+      { text: "S", en: "Small, please.", next: "coffee_to_go" },
+      { text: "M", en: "Medium, please.", next: "coffee_to_go" },
+      { text: "L", en: "Large, please.", next: "coffee_to_go" }
+    ]
+  },
+  coffee_to_go: {
+    message: "店内のご利用ですか？",
+    en: "Is this for here?",
+    audio: "voice/58 (3).wav",
+    options: [
+      { text: "はい", en: "Yes, for here.", next: "done" },
+      { text: "テイクアウトで", en: "To go, please.", next: "done" }
+    ]
+  },
+  milano: {
+    message: "ミラノサンドA、B、Cとございます",
+    en: "We have Milano Sandwich A, B, and C.",
+    audio: "voice/58 (17).wav",
+    options: [
+      { text: "A", en: "A, please.", next: "drink_offer" },
+      { text: "B", en: "B, please.", next: "drink_offer" },
+      { text: "C", en: "C, please.", next: "drink_offer" }
+    ]
+  },
+  drink_offer: {
+    message: "お飲み物はいかがですか？すべてのお飲み物が50円引きのセットがございます",
+    en: "Would you like a drink? All drinks are ¥50 off in a set.",
+    audio: "voice/58 (18).wav",
+    options: [
+      { text: "コーヒーください", en: "I'd like a coffee, please.", next: "coffee_type" },
+      { text: "いらないです", en: "No, thank you.", next: "done" }
+    ]
+  },
+  done: {
+    message: "かしこまりました。ただいまご用意いたします",
+    en: "Certainly. I'll prepare that right away.",
+    audio: "voice/58 (19).wav",
+    options: []
+  }
+};
+
+let currentStep = "start";
+
+function showStep(stepKey, userReply = null) {
+  const prevStep = steps[currentStep];
+
+  // 👤 お客さんの発言（前の選択肢）
+  if (userReply) {
+    const userOption = steps[currentStep].options.find(o => o.text === userReply);
+    const userBubble = document.createElement("div");
+    userBubble.className = "chat-bubble user";
+    userBubble.innerHTML = `👤 ${userReply}<br><em>→ ${userOption?.en || ""}</em>`;
+    conversation.appendChild(userBubble);
+  }
+
+  currentStep = stepKey; 
+  const step = steps[stepKey];
+
+
+  // 👨‍🍳 店員の発言と音声
+  const staffBubble = document.createElement("div");
+  staffBubble.className = "chat-bubble staff";
+  staffBubble.innerHTML = `
+    👨‍🍳 ${step.message}<br>
+    <em>→ ${step.en || ""}</em>
+    ${step.audio ? `<br><button onclick="document.getElementById('audio-${stepKey}').play()">🔊 音声を聞く</button>` : ''}
+    ${step.audio ? `<audio id="audio-${stepKey}" src="${step.audio}"></audio>` : ''}
+  `;
+  conversation.appendChild(staffBubble);
+
+  // 選択肢の描画
+  options.innerHTML = "";
+  if (step.options.length > 0) {
+    step.options.forEach(option => {
+      const btn = document.createElement("button");
+      btn.textContent = option.text;
+      btn.onclick = () => showStep(option.next, option.text);
+      options.appendChild(btn);
+    });
+  } else {
+    endConversation();
+  }
+
+  conversation.scrollTop = conversation.scrollHeight;
+}
+
+const restartBtn = document.getElementById('restartBtn');
+
+// すべてのステップが終わったらボタンを表示
+function endConversation() {
+  const staffBubble = document.createElement("div");
+  staffBubble.className = "chat-bubble staff";
+  staffBubble.innerHTML = `👨‍🍳 ありがとうございました`;
+  conversation.appendChild(staffBubble);
+  restartBtn.style.display = 'block';
+  conversation.scrollTop = conversation.scrollHeight;
+}
+
+// 「最初に戻る」ボタンが押されたときの処理
+restartBtn.onclick = () => {
+  conversation.innerHTML = '';
+  options.innerHTML = '';
+  restartBtn.style.display = 'none';
+  currentStep = "start"; // ← 最初のステップに戻す
+  showStep(currentStep); // ← 再表示
+};
+
+
+showStep(currentStep);
+</script>
+
+</body>
+</html>

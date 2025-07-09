@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>接客フレーズ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="background">
+
+<div class="top-stripes"></div> <!-- ← これを追加！ -->
+
+<div class="content"></div>
+
+<div class="back-to-home">
+  <a href="index.html" class="home-button">
+    <img src="bookmark.png" alt="Home" />
+    <span class="home-label">HOME</span>
+  </a>
+</div>
+  
+  <div class="header">
+    <h1>接客フレーズ</h1>
+    <p>You can review commonly used customer service phrases with English and audio.</p>
+  </div>
+
+<div id="filter-buttons">
+  <!-- <button onclick="filterPhrases('all')">すべて表示</button> -->
+  <button onclick="filterPhrases('beginner')">Beginner</button>
+  <button onclick="filterPhrases('intermediate')">Intermediate</button>
+  <button onclick="filterPhrases('advanced')">Advanced</button>
+</div>
+  
+ <div class="phrase-group" data-level="beginner">
+  <div class="header">
+   <h2>初級フレーズ</h2>
+   <p>beginner</p>
+  </div>
+
+  <div class="phrase">
+    <p>💡お客様がご来店されたとき</p>
+    <em>When the customer enters the store</em>
+    <h3>「いらっしゃいませ」</h3>
+    <p><strong>カタカナ：</strong>イラッシャイマセ</p>
+    <p><strong>ローマ字：</strong>irasshaimase</p>
+    <button onclick="document.getElementById('audio1').play()">🔊 再生</button>
+    <em>Click to hear the pronunciation.</em>
+    <audio id="audio1" src="voice/58 (4).wav"></audio>
+    <p><strong>英語訳：</strong>Welcome (to our store)!</p>
+  </div>
+
+  <div class="phrase">
+    <p>💡注文を受けるとき(できれば一番最初に聞けると良い)</p>
+    <em>When asking for the customer's order (at the beginning)</em>
+    <h3>「店内のご利用ですか？」</h3>
+    <p><strong>カタカナ：</strong>テンナイ ノ ゴリヨウデスカ？</p>
+    <p><strong>ローマ字：</strong>tennai no goriyou desu ka?</p>
+    <button onclick="document.getElementById('audio2').play()">🔊 再生</button>
+    <em>Click to hear the pronunciation.</em>  
+    <audio id="audio2" src="voice/58 (3).wav"></audio>
+    <p><strong>英語訳：</strong>Is this for here or to go?</p>
+  </div>
+
+  <div class="phrase">
+    <p>💡ドリンクを頼まれたとき</p>
+    <em>When the customer orders a drink</em>
+    <h3>「ホットとアイスがございます」</h3>
+    <p><strong>カタカナ：</strong>ホット ト アイス ガ ゴザイマス</p>
+    <p><strong>ローマ字：</strong>hot to ice ga gozaimasu</p>
+    <button onclick="document.getElementById('audio3').play()">🔊 再生</button>
+    <em>Click to hear the pronunciation.</em>  
+    <audio id="audio3" src="voice/58 (5).wav"></audio>
+    <p><strong>英語訳：</strong>Would you like it hot or iced?</p>
+  </div>
+  
+ <div class="phrase">
+    <p>💡ドリンクを頼まれたとき</p>
+    <em>When the customer orders a drink</em>
+    <h3>「サイズはいかがなさいますか？」</h3>
+    <p><strong>カタカナ：</strong>サイズ ハ イカガ ナサイマスカ？</p>
+    <p><strong>ローマ字：</strong>size wa ikaga nasaimasuka</p>
+    <button onclick="document.getElementById('audio4').play()">🔊 再生</button>
+    <em>Click to hear the pronunciation.</em>  
+    <audio id="audio4" src="voice/58 (6).wav"></audio>
+    <p><strong>英語訳：</strong>What size would you like?</p>
+  </div>
+
+ <div class="phrase">
+    <p>💡お会計後</p>
+    <em>After the customer pays</em>
+    <h3>「ありがとうございました」</h3>
+    <p><strong>カタカナ：</strong>アリガトウゴザイマシタ</p>
+    <p><strong>ローマ字：</strong>arigato gozaimasita</p>
+    <button onclick="document.getElementById('audio5').play()">🔊 再生</button>
+    <em>Click to hear the pronunciation.</em>  
+    <audio id="audio5" src="voice/58 (7).wav"></audio>
+    <p><strong>英語訳：</strong>Thank you</p>
+  </div>
+ </div>
+
+<div class="phrase-group" data-level="intermediate">
+  <div class="header">
+   <h2>中級フレーズ</h2>
+   <p>intermediate</p>
+  </div>
+
+   <div class="phrase">
+    <p>💡フードを頼まれたとき</p>
+    <em>When the customer orders food</em>
+    <h3>「お食事はレシート番号でお呼びいたします」</h3>
+    <p><strong>カタカナ：</strong>オショクジ ハ レシート バンゴウ デ オヨビ イタシマス</p>
+    <p><strong>ローマ字：</strong>osyokuji wa receipt bango de oyobi itasimasu</p>
+    <button onclick="document.getElementById('audio11').play()">🔊 再生</button>
+    <em>Click to hear the pronunciation.</em>  
+    <audio id="audio11" src="voice/58 (14).wav"></audio>
+    <p><strong>英語訳：</strong>We’ll call your number when your food is ready</p>
+  </div>
+
+   <div class="phrase">
+    <p>💡ドリンクのみをお持ち帰りのとき</p>
+    <em>When a customer orders only drinks to go</em>
+    <h3>「ストローはお通ししてよろしいですか？」</h3>
+    <p><strong>カタカナ：</strong>ストロー ハ オトオシ シテ ヨロシイ デスカ？</p>
+    <p><strong>ローマ字：</strong>straw wa otoshi shite yorosi desuka?</p>
+    <button onclick="document.getElementById('audio12').play()">🔊 再生</button>
+    <em>Click to hear the pronunciation.</em>  
+    <audio id="audio12" src="voice/58 (15).wav"></audio>
+    <p><strong>英語訳：</strong>Would you like a straw?</p>
+  </div>
+
+   <div class="phrase">
+    <p>💡ドリンクを紙袋に包むとき</p>
+    <em>When wrapping the drink in a paper bag</em>
+    <h3>「ガムシロップとミルクはご利用ですか？」</h3>
+    <p><strong>カタカナ：</strong>ガムシロップ ト ミルク ハ ゴリヨウ デスカ？</p>
+    <p><strong>ローマ字：</strong>gumsyrup to milk wa goriyo desuka?</p>
+    <button onclick="document.getElementById('audio13').play()">🔊 再生</button>
+    <em>Click to hear the pronunciation.</em>  
+    <audio id="audio13" src="voice/58 (16).wav"></audio>
+    <p><strong>英語訳：</strong>Do you need syrup or milk with that?</p>
+  </div>
+
+   <div class="phrase">
+    <p>💡</p>
+    <em></em>
+    <h3>「」</h3>
+    <p><strong>カタカナ：</strong></p>
+    <p><strong>ローマ字：</strong></p>
+    <button onclick="document.getElementById('audio').play()">🔊 再生</button>
+    <em>Click to hear the pronunciation.</em>  
+    <audio id="audio" src=".wav"></audio>
+    <p><strong>英語訳：</strong>Thank you</p>
+  </div>
+
+   <div class="phrase">
+    <p>💡</p>
+    <em></em>
+    <h3>「」</h3>
+    <p><strong>カタカナ：</strong></p>
+    <p><strong>ローマ字：</strong></p>
+    <button onclick="document.getElementById('audio').play()">🔊 再生</button>
+    <em>Click to hear the pronunciation.</em>  
+    <audio id="audio" src=".wav"></audio>
+    <p><strong>英語訳：</strong>Thank you</p>
+  </div>
+
+
+</div>
+
+<div class="phrase-group" data-level="advanced">
+  <div class="header">
+   <h2>上級フレーズ</h2>
+   <p>advanced</p>
+  </div>
+
+ <div class="phrase">
+    <p>💡メニューを迷っているお客様の後ろに、注文が決まっているお客様がいるとき</p>
+    <em> The person in front is undecided, and the next customer is ready to order</em>
+    <h3>「ご注文お決まりのお客様からお伺いいたします」</h3>
+    <p><strong>カタカナ：</strong>ゴチュウモン オキマリ ノ オキャクサマ カラ オウカガイ イタシマス</p>
+    <p><strong>ローマ字：</strong>gotyumon okimari no okyakusama kara oukagai itasimasu</p>
+    <button onclick="document.getElementById('audio21').play()">🔊 再生</button>
+    <em>Click to hear the pronunciation.</em>  
+    <audio id="audio21" src="voice/58 (13).wav"></audio>
+    <p><strong>英語訳：</strong> If your order is ready, you may go ahead</p>
+  </div>
+
+   <div class="phrase">
+    <p>💡お客様が注文を何にするか迷っているとき</p>
+    <em>When the customer is unsure what to order</em>
+    <h3>「おすすめは新商品のミラノサンドセットです」</h3>
+    <p><strong>カタカナ：</strong>オススメ ハ シンショウヒン ノ ミラノサンド セット デス</p>
+    <p><strong>ローマ字：</strong>osusume wa sinsyouhin no MilanoSand Set desu</p>
+    <button onclick="document.getElementById('audio22').play()">🔊 再生</button>
+    <em>Click to hear the pronunciation.</em>  
+    <audio id="audio22" src="voice/58 (12).wav"></audio>
+    <p><strong>英語訳：</strong>Our recommendation is the new Milano Sandwich Set</p>
+  </div>
+
+   <div class="phrase">
+    <p>💡</p>
+    <em></em>
+    <h3>「」</h3>
+    <p><strong>カタカナ：</strong></p>
+    <p><strong>ローマ字：</strong></p>
+    <button onclick="document.getElementById('audio').play()">🔊 再生</button>
+    <em>Click to hear the pronunciation.</em>  
+    <audio id="audio" src=".wav"></audio>
+    <p><strong>英語訳：</strong>Thank you</p>
+  </div>
+
+   <div class="phrase">
+    <p>💡</p>
+    <em></em>
+    <h3>「」</h3>
+    <p><strong>カタカナ：</strong></p>
+    <p><strong>ローマ字：</strong></p>
+    <button onclick="document.getElementById('audio').play()">🔊 再生</button>
+    <em>Click to hear the pronunciation.</em>  
+    <audio id="audio" src=".wav"></audio>
+    <p><strong>英語訳：</strong>Thank you</p>
+  </div>
+
+   <div class="phrase">
+    <p>💡</p>
+    <em></em>
+    <h3>「」</h3>
+    <p><strong>カタカナ：</strong></p>
+    <p><strong>ローマ字：</strong></p>
+    <button onclick="document.getElementById('audio').play()">🔊 再生</button>
+    <em>Click to hear the pronunciation.</em>  
+    <audio id="audio" src=".wav"></audio>
+    <p><strong>英語訳：</strong>Thank you</p>
+  </div>
+
+
+</div>
+
+</div><!-- /.content -->
+
+<div class="bottom-stripes"></div>
+
+</div> <!-- /.background -->
+
+<script>
+  function filterPhrases(level) {
+    const phrases = document.querySelectorAll('.phrase-group');
+    phrases.forEach(group => {
+      if (level === 'all' ||group.getAttribute('data-level') === level) {
+        group.style.display = 'block';
+      } else {
+        group.style.display = 'none';
+      }
+    });
+  }
+        // ✅ 初期表示で「初級フレーズ」だけを表示
+  window.addEventListener('DOMContentLoaded', () => {
+    filterPhrases('beginner');
+  });
+
+</script>
+
+<script>
+  function filterPhrases(level) {
+    const phrases = document.querySelectorAll('.phrase-group');
+    phrases.forEach(group => {
+      if (level === 'all' || group.getAttribute('data-level') === level) {
+        group.style.display = 'block';
+      } else {
+        group.style.display = 'none';
+      }
+    });
+
+    // ★ active クラスの切り替え
+    const buttons = document.querySelectorAll('#filter-buttons button');
+    buttons.forEach(button => {
+      if (button.getAttribute('onclick')?.includes(`filterPhrases('${level}')`)) {
+        button.classList.add('active');
+      } else {
+        button.classList.remove('active');
+      }
+    });
+  }
+
+  // 最初に beginner を表示 & ボタンに active をつける
+  window.addEventListener('DOMContentLoaded', () => {
+    filterPhrases('beginner');
+  });
+</script>
+
+
+</body>
+</html>
