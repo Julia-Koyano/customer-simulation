@@ -210,17 +210,18 @@ button:hover {
 
 /* === チャット風UI === */
 .chat-bubble {
-  max-width: 70%;
+  max-width: 85%;  /* ← 100%ではなく余白をもたせる */
   padding: 12px;
-  margin: 6px 0;
+  margin: 6px 8px; /* ← 左右に8pxの余白を確保 */
   border-radius: 16px;
   clear: both;
   font-size: 16px;
   line-height: 1.5;
-  word-wrap: break-word;     /* 長い単語でも折り返す */
-  word-break: break-word;    /* 単語の途中でも折り返す */
-  overflow-wrap: break-word; /* 安全策として追加 */
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
+
 
 .staff {
   background-color: #eee;
@@ -269,13 +270,11 @@ html, body {
     font-size: 20px;
   }
   
-  .chat-bubble {
+.chat-bubble {
     font-size: 14px;
     padding: 10px;
-    max-width: 90%;
-    word-wrap: break-word;
-    word-break: break-word;
-    overflow-wrap: break-word;
+    max-width: 85%;      /* ← 幅を狭める */
+    margin: 6px 8px;     /* ← これで左右に隙間を確保 */
   }
 
  .staff {
