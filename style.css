@@ -271,6 +271,18 @@ html, body {
   .chat-bubble {
     font-size: 14px;
     padding: 10px;
+    max-width: 100%; /* ← これを追加 */
+    float: none;     /* ← floatを解除 */
+    text-align: left; /* ← 右寄せを避けて自然に */
+  }
+   .staff {
+    float: none;
+    text-align: left;
+  }
+
+  .user {
+    float: none;
+    text-align: right;
   }
   button {
     font-size: 14px;
