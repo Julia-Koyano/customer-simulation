@@ -294,7 +294,7 @@ html, body {
   }
 
   .home-button {
-    right: 8px; /* ホームリボンも少し左に */
+    left: 8px;
   }
 
   button {
