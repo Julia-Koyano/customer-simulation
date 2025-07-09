@@ -268,22 +268,28 @@ html, body {
   h1 {
     font-size: 20px;
   }
+  
   .chat-bubble {
     font-size: 14px;
     padding: 10px;
-    max-width: 100%; /* ← これを追加 */
-    float: none;     /* ← floatを解除 */
-    text-align: left; /* ← 右寄せを避けて自然に */
+    max-width: 90%;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
-   .staff {
-    float: none;
+
+ .staff {
+    float: left;  /* 左寄せ */
     text-align: left;
+    border-top-left-radius: 0;
   }
 
   .user {
-    float: none;
+    float: right; /* 右寄せを維持 */
     text-align: right;
+    border-top-right-radius: 0;
   }
+  
   button {
     font-size: 14px;
     padding: 6px 12px;
@@ -296,3 +302,5 @@ html, body {
     max-height: 60vh;
   }
 }
+
+
