@@ -270,33 +270,31 @@ html, body {
     font-size: 20px;
   }
   
-  .chat-bubble {
-    max-width: 85%;
-    margin: 6px auto;
+    .chat-bubble {
+    max-width: 90%;
+    margin: 8px auto;
     float: none;
     text-align: left;
   }
 
-  .user {
-    float: none;
-    text-align: right;
-  }
-
-  .staff {
-    float: none;
-    text-align: left;
+  .user, .staff {
+    float: none !important;
+    text-align: left !important;
   }
 
   .quiz-page button {
-    width: 100%;
-    max-width: 280px;
-    margin: 8px auto;
-    display: block;
+    width: 90%;
+    max-width: 300px;
+    margin: 10px auto;
   }
 
   .phrase {
     margin-left: 8px;
     margin-right: 8px;
+  }
+
+  .home-button {
+    right: 8px; /* ホームリボンも少し左に */
   }
 
   button {
