@@ -270,25 +270,35 @@ html, body {
     font-size: 20px;
   }
   
-.chat-bubble {
-    font-size: 14px;
-    padding: 10px;
-    max-width: 85%;      /* ← 幅を狭める */
-    margin: 6px 8px;     /* ← これで左右に隙間を確保 */
-  }
-
- .staff {
-    float: left;  /* 左寄せ */
+  .chat-bubble {
+    max-width: 85%;
+    margin: 6px auto;
+    float: none;
     text-align: left;
-    border-top-left-radius: 0;
   }
 
   .user {
-    float: right; /* 右寄せを維持 */
+    float: none;
     text-align: right;
-    border-top-right-radius: 0;
   }
-  
+
+  .staff {
+    float: none;
+    text-align: left;
+  }
+
+  .quiz-page button {
+    width: 100%;
+    max-width: 280px;
+    margin: 8px auto;
+    display: block;
+  }
+
+  .phrase {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
   button {
     font-size: 14px;
     padding: 6px 12px;
