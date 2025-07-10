@@ -265,7 +265,7 @@ html, body {
   overflow-x: hidden;
 }
 
-@media (max-width: 360px) {
+@media (max-width: 480px) {
   h1 {
     font-size: 20px;
   }
@@ -273,8 +273,9 @@ html, body {
     .chat-bubble {
     max-width: 90%;
     margin: 8px auto;
-    float: none;
-    text-align: left;
+    float: none !important;
+    text-align: left !important;
+    box-sizing: border-box;
   }
 
   .user, .staff {
