@@ -5,156 +5,291 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>接客クイズ</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    #quiz-switch {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    #quiz-switch button {
+      padding: 8px 16px;
+      font-size: 14px;
+      border-radius: 4px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #quiz-switch button.active {
+      background-color: #ff00bf;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body class="quiz-page">
 
 <div class="background">
-    <div class="top-stripes"></div>
+  <div class="top-stripes"></div>
 
   <div class="back-to-home">
-   <a href="index.html" class="home-button">
-    <img src="bookmark.png" alt="Home" />
-    <span class="home-label">HOME</span>
-   </a>
+    <a href="index.html" class="home-button">
+      <img src="bookmark.png" alt="Home" />
+      <span class="home-label">HOME</span>
+    </a>
   </div>
-
 
   <div class="header">
-   <h1>接客クイズ</h1>
-   <p>You can practice customer service phrases in quiz format.</p>
+    <h1>接客クイズ</h1>
+    <p>You can practice customer service phrases in quiz format.</p>
   </div>
-  
+
+  <!-- 切り替えボタン -->
+  <div id="quiz-switch">
+    <button id="show-service" class="active">接客クイズ</button>
+    <button id="show-listening">リスニングクイズ</button>
+  </div>
 
   <div id="quiz"></div>
   <button id="resetBtn" style="display:none;">Reset</button>
 
-  <script>
-    const data = [
-      {
-        q: '👤 お客さん：「セットはありますか？」',
-        en: 'Customer: "Do you have any sets?"',
-        options: [
-  { ja: 'はい、ドリンクのみとなります', en:'Yes, drinks only.' },
-  { ja: 'モーニングセット（10時30分まで）とミラノサンドセットがございます', en: 'We have morning sets (until 10:30) and Milano sandwich sets.' },
-  { ja: 'セットはやっていません', en: 'We do not offer sets.' }
-],
-        correct: 1,
-        explanation: {ja:'モーニングセットとミラノサンドセットがあることを案内します。',en:'Let the customer know that we have a morning set (until 10:30) and a Milano sandwich set.'},
-        audio: '58 (9).wav'
-      },
-      {
-        q: '👤 お客さん：「Aモーニングをお願いします」',
-        en: 'Customer: "I\'ll have the A Morning Set, please."',
-        options: [
-  { ja: 'ミラノサンドAですね', en:  "So, that's Milano Sandwich A, correct?"},
-  { ja: 'お飲み物はいかがなさいますか？', en: 'What would you like to drink?' },
-  { ja: 'サイズはいかがなさいますか？', en: 'What size would you like?' }
-        ],
-        correct: 1,
-        explanation:  {ja:'モーニングセットは飲み物の選択が必要なので、飲み物を確認します。',en:'The morning set comes with a drink, so we ask which one the customer would like.'},
-        audio: '58 (10).wav'
-      },
-      {
-        q: '👤 お客さん：「ジャーマンドッグのセットで」',
-        en: 'Customer: "I\'ll have the German dog set."',
-        options: [
-  { ja: 'かしこまりました', en: 'Certainly.' },
-  { ja: 'お飲み物はいかがなさいますか？', en: 'What would you like to drink?' },
-  { ja: 'そちらは単品のみとなりますがよろしいですか？', en: 'That dish is available à la carte only. Is that alright?' }
-        ],
-        correct: 2,
-        explanation:  {ja:'ジャーマンドッグはセットにできないので、確認を取ります',en:'The morning set comes with a drink, so we ask which one the customer would like.'},
-        audio: '58 (11).wav'
-      },
-    
-    ];
-
-    const container = document.getElementById('quiz');
-    const resetBtn = document.getElementById('resetBtn');
-
-    function renderQuiz() {
-      container.innerHTML = '';
-      let correctCount = 0; // クイズ開始時にリセット
-      data.forEach((item, i) => {
-        const div = document.createElement('div');
-        div.className = 'question';
-
-        const p = document.createElement('p');
-        p.textContent = item.q;
-        div.appendChild(p);
-
-         // 英訳がある場合だけ表示
-    if (item.en) {
-      const en = document.createElement('p');
-      en.textContent = item.en;
-      en.style.fontStyle = 'italic'; // 斜体
-      en.style.color = '#555'; // 薄めの色
-      div.appendChild(en);
-    }
-
-item.options
-  .map((opt, index) => ({ text: opt.ja, en: opt.en, index }))
-  .sort(() => Math.random() - 0.5)
-  .forEach(({ text, en, index }) => {
-    const btn = document.createElement('button');
-    btn.innerHTML = `${text}<br><small style="color:#555;">${en}</small>`;
-    btn.onclick = () => {
-      const allBtns = div.querySelectorAll('button');
-      allBtns.forEach(b => b.disabled = true);
-      btn.classList.add(index === item.correct ? 'correct' : 'wrong');
-      btn.innerHTML += index === item.correct ? ' ✓' : ' ✗';
-      if (index === item.correct) {
-       correctCount++;
-      }
-
-
-const explanation = document.createElement('div');
-explanation.className = 'explanation';
-explanation.innerHTML = `
-  📝 ${item.explanation.ja}<br>
-  <small style="color: #555;">${item.explanation.en}</small>`;
-div.appendChild(explanation);
-
-      const audio = document.createElement('audio');
-      audio.src =  'voice/' + item.audio;
-      audio.id = `audio${i}`;
-      div.appendChild(audio);
-
-      const playBtn = document.createElement('button');
-      playBtn.textContent = '🔊 正解の音声を聞く';
-      playBtn.className = 'audio-btn';
-      playBtn.onclick = () => document.getElementById(`audio${i}`).play();
-      div.appendChild(playBtn);
-
-if (i === data.length - 1) {
-  resetBtn.style.display = 'block';
-
-  const scoreMsg = document.createElement('p');
-  scoreMsg.style.fontWeight = 'bold';
-  scoreMsg.style.fontSize = '18px';
-  scoreMsg.style.marginTop = '24px';
-  scoreMsg.textContent = `${data.length}問中${correctCount}問正解でした！`;
-  div.appendChild(scoreMsg);
-}
-
-    };
-    div.appendChild(btn);
-  });
-
-        container.appendChild(div);
-      });
-    }
-
-    resetBtn.onclick = () => {
-      resetBtn.style.display = 'none';
-      renderQuiz();
-    };
-
-    renderQuiz();
-  </script>
-
   <div class="bottom-stripes"></div>
 </div>
 
+<script>
+const serviceData = [
+  {
+    q: '👤 お客さん：「セットはありますか？」',
+    en: 'Customer: "Do you have any sets?"',
+    options: [
+      { ja: 'はい、ドリンクのみとなります', en:'Yes, drinks only.' },
+      { ja: 'モーニングセット（10時30分まで）とミラノサンドセットがございます', en: 'We have morning sets (until 10:30) and Milano sandwich sets.' },
+      { ja: 'セットはやっていません', en: 'We do not offer sets.' }
+    ],
+    correct: 1,
+    explanation: {ja:'モーニングセットとミラノサンドセットがあることを案内します。',en:'Let the customer know that we have a morning set (until 10:30) and a Milano sandwich set.'},
+    audio: '58 (9).wav'
+  },
+  {
+    q: '👤 お客さん：「Aモーニングをお願いします」',
+    en: 'Customer: "I\'ll have the A Morning Set, please."',
+    options: [
+      { ja: 'ミラノサンドAですね', en:  "So, that's Milano Sandwich A, correct?"},
+      { ja: 'お飲み物はいかがなさいますか？', en: 'What would you like to drink?' },
+      { ja: 'サイズはいかがなさいますか？', en: 'What size would you like?' }
+    ],
+    correct: 1,
+    explanation:  {ja:'モーニングセットは飲み物の選択が必要なので、飲み物を確認します。',en:'The morning set comes with a drink, so we ask which one the customer would like.'},
+    audio: '58 (10).wav'
+  },
+  {
+    q: '👤 お客さん：「ジャーマンドッグのセットで」',
+    en: 'Customer: "I\'ll have the German dog set."',
+    options: [
+      { ja: 'かしこまりました', en: 'Certainly.' },
+      { ja: 'お飲み物はいかがなさいますか？', en: 'What would you like to drink?' },
+      { ja: 'そちらは単品のみとなりますがよろしいですか？', en: 'That dish is available à la carte only. Is that alright?' }
+    ],
+    correct: 2,
+    explanation:  {ja:'ジャーマンドッグはセットにできないので、確認を取ります',en:'German dog is not available as a set, so we need to confirm.'},
+    audio: '58 (11).wav'
+  }
+];
+
+const listeningData = [
+  {
+    audio: '58 (20).wav',
+    options: [
+      'ルイボスティーください',
+      'アイスコーヒーください',
+      'アイスティーください'
+    ],
+    correct: 2
+  },
+  {
+    audio: '58 (21).wav',
+    options: [
+      'Bモーニングください',
+      'Bサンドください',
+      'Aモーニングください'
+    ],
+    correct: 0
+  },
+  {
+    audio: '58 (22).wav',
+    options: [
+      'Sアイスお願いします',
+      'Lアイスお願いします',
+      'Мアイスお願いします'
+    ],
+    correct: 2
+  }
+];
+
+const container = document.getElementById('quiz');
+const resetBtn = document.getElementById('resetBtn');
+
+function renderQuiz() {
+  container.innerHTML = '';
+  let correctCount = 0;
+  serviceData.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'question';
+
+    const p = document.createElement('p');
+    p.textContent = item.q;
+    div.appendChild(p);
+
+    if (item.en) {
+      const en = document.createElement('p');
+      en.textContent = item.en;
+      en.style.fontStyle = 'italic';
+      en.style.color = '#555';
+      div.appendChild(en);
+    }
+
+    item.options
+      .map((opt, index) => ({ text: opt.ja, en: opt.en, index }))
+      .sort(() => Math.random() - 0.5)
+      .forEach(({ text, en, index }) => {
+        const btn = document.createElement('button');
+        btn.innerHTML = `${text}<br><small style="color:#555;">${en}</small>`;
+        btn.onclick = () => {
+          const allBtns = div.querySelectorAll('button');
+          allBtns.forEach(b => b.disabled = true);
+          btn.classList.add(index === item.correct ? 'correct' : 'wrong');
+          btn.innerHTML += index === item.correct ? ' ✓' : ' ✗';
+          if (index === item.correct) correctCount++;
+
+          const explanation = document.createElement('div');
+          explanation.className = 'explanation';
+          explanation.innerHTML = `📝 ${item.explanation.ja}<br><small style="color: #555;">${item.explanation.en}</small>`;
+          div.appendChild(explanation);
+
+          const audio = document.createElement('audio');
+          audio.src = 'voice/' + item.audio;
+          audio.id = `audio${i}`;
+          div.appendChild(audio);
+
+          const playBtn = document.createElement('button');
+          playBtn.textContent = '🔊 正解の音声を聞く';
+          playBtn.className = 'audio-btn';
+          playBtn.onclick = () => document.getElementById(`audio${i}`).play();
+          div.appendChild(playBtn);
+
+          if (i === serviceData.length - 1) {
+            resetBtn.style.display = 'block';
+            const scoreMsg = document.createElement('p');
+            scoreMsg.style.fontWeight = 'bold';
+            scoreMsg.style.fontSize = '18px';
+            scoreMsg.style.marginTop = '24px';
+            scoreMsg.textContent = `${serviceData.length}問中${correctCount}問正解でした！`;
+            div.appendChild(scoreMsg);
+          }
+        };
+        div.appendChild(btn);
+      });
+    container.appendChild(div);
+  });
+}
+
+function renderListeningQuiz() {
+  container.innerHTML = '';
+
+  // 説明文
+  const intro = document.createElement('p');
+  intro.innerHTML = '🎧 <strong>音声をきいて、同じ内容の選択肢を選ぼう</strong><br><small>Listen to the audio and choose the matching sentence.</small>';
+  intro.style.textAlign = 'center';
+  intro.style.fontWeight = 'bold';
+  intro.style.marginBottom = '24px';
+  container.appendChild(intro);
+
+  let correctCount = 0;
+  let answeredCount = 0;
+
+  listeningData.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'question';
+
+    const audio = document.createElement('audio');
+    audio.src = 'voice/' + item.audio;
+    audio.id = `listenaudio${i}`;
+    div.appendChild(audio);
+
+    const playBtn = document.createElement('button');
+    playBtn.textContent = '🔊 音声を聞く';
+    playBtn.className = 'audio-btn';
+    playBtn.onclick = () => document.getElementById(`listenaudio${i}`).play();
+    div.appendChild(playBtn);
+
+// ランダムなインデックス付き選択肢の生成
+const randomizedOptions = item.options.map((text, index) => ({ text, index }))
+                                     .sort(() => Math.random() - 0.5);
+
+randomizedOptions.forEach(({ text, index }) => {
+  const btn = document.createElement('button');
+  btn.textContent = text;
+  btn.onclick = () => {
+    const allBtns = div.querySelectorAll('button');
+    allBtns.forEach(b => b.disabled = true);
+    btn.classList.add(index === item.correct ? 'correct' : 'wrong');
+    btn.innerHTML += index === item.correct ? ' ✓' : ' ✗';
+
+    if (index === item.correct) correctCount++;
+
+    // 最後の問題の後にスコア表示
+    if (i === listeningData.length - 1) {
+      const scoreMsg = document.createElement('p');
+      scoreMsg.style.fontWeight = 'bold';
+      scoreMsg.style.fontSize = '18px';
+      scoreMsg.style.marginTop = '24px';
+      scoreMsg.style.textAlign = 'center';
+      scoreMsg.textContent = `${listeningData.length}問中${correctCount}問正解でした！`;
+      container.appendChild(scoreMsg);
+
+        // ← ここでリセットボタンを表示
+      resetBtn.style.display = 'block';
+    }
+  };
+  div.appendChild(btn);
+});
+
+    container.appendChild(div);
+  });
+}
+
+// 切り替えボタンの動作
+const showServiceBtn = document.getElementById('show-service');
+const showListeningBtn = document.getElementById('show-listening');
+
+showServiceBtn.addEventListener('click', () => {
+  showServiceBtn.classList.add('active');
+  showListeningBtn.classList.remove('active');
+  resetBtn.style.display = 'none';
+  renderQuiz();
+});
+
+showListeningBtn.addEventListener('click', () => {
+  showListeningBtn.classList.add('active');
+  showServiceBtn.classList.remove('active');
+  resetBtn.style.display = 'none';
+  renderListeningQuiz();
+});
+
+// リセットボタン
+resetBtn.onclick = () => {
+  if (showServiceBtn.classList.contains('active')) {
+    renderQuiz();
+  } else {
+    renderListeningQuiz();
+  }
+  resetBtn.style.display = 'none';
+};
+
+// 初期表示
+renderQuiz();
+</script>
 </body>
 </html>
