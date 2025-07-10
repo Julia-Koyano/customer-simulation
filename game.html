@@ -1,38 +1,248 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>カフェゲーム</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="customer">お客さん「カフェラテください」</div>
-<div id="cup"></div>
 
-<button onclick="addToCup('milk')">ミルク</button>
-<button onclick="addToCup('espresso')">エスプレッソ</button>
-<button onclick="addToCup('straw')">ストロー</button>
-<button onclick="serveDrink()">提供する</button>
+  <button onclick="setRandomOrder()">Take an order</button>
 
-<script>
+  <div id="customer">お客さん「カフェラテください」</div>
+  <div id="cup">カップ: </div>
+  <div id="status"></div>
+
+  <!-- 一段目 -->
+  <div class="row">
+    <div class="section-box">
+     <div class="section-label">Coffee</div>
+     <button onclick="addToCup('hotCoffee')">ホットコーヒー</button>
+     <button onclick="addToCup('icedCoffee')">アイスコーヒー</button>
+    </div>
+
+      <!-- エスプレッソマシン -->
+   <div class="section-box">
+     <div class="section-label">☕ エスプレッソマシン</div>
+     <button onclick="startExtraction('espresso')" id="espressoBtn">エスプレッソ抽出</button>
+     <button onclick="startExtraction('cafeLatte')" id="latteBtn">カフェラテ抽出</button>
+     <div id="extractedContainer"></div>
+   </div>
+
+     <!-- 冷蔵庫 -->
+   <div class="section-box">
+     <div class="section-label">🧊 冷蔵庫</div>
+     <button onclick="addToCup('milk')">ミルク</button>
+     <button onclick="addToCup('soyMilk')">豆乳</button>
+     <button onclick="addToCup('icedTea')">アイスティー</button>
+
+   </div>
+  </div>
+
+
+<!-- 二段目（スチーム・氷など） -->
+<div class="row">
+
+  <div class="section-box">
+    <div class="section-label"> </div>
+    <button onclick="steamMilk()">スチーム</button>
+    <button onclick="addToCup('ice')">氷</button>
+    <button onclick="addToCup('hotWater')">お湯</button>
+  </div>
+
+    <!-- トッピング -->
+  <div class="section-box">
+    <div class="section-label"> </div>
+    <button onclick="addToCup('straw')">ストロー</button>
+    <button onclick="addToCup('saucer')">ソーサー</button>
+    <button onclick="addToCup('spoon')">スプーン</button>
+    <button onclick="setTakeout(true)">テイクアウト</button>
+  </div>
+
+  <div class="section-box">
+    <div class="section-label">TeaBag</div>
+    <button onclick="addToCup('teaBag')">茶葉</button>
+    <button onclick="addToCup('milkTeaBag')">ミルク用茶葉</button>
+  </div>
+
+
+</div>
+
+  <!-- 三段目 -->
+  <div class="row" id="serve-row">
+    <button onclick="serveDrink()">提供する</button>
+  </div>
+
+  <script>
     let cup = [];
+    let extractedItems = {};
+    let currentOrder = 'cafeLatte';
 
-function addToCup(ingredient) {
-  cup.push(ingredient);
-  document.getElementById('cup').innerText = 'カップ: ' + cup.join(', ');
-}
+const correctOrders = {
+  cafeLatte: { items: ['cafeLatte', 'saucer', 'spoon'], takeout: false },
+  icedCafeLatte: { items: ['ice', 'milk', 'espresso', 'straw'], takeout: false },
+  soyLatte: { items: ['hotSoyMilk', 'espresso', 'saucer', 'spoon'], takeout: false },
+  icedSoyLatte: { items: ['ice', 'soyMilk', 'icedCoffee', 'straw'], takeout: false },
+  hotCoffee: { items: ['hotCoffee', 'saucer', 'spoon'], takeout: false },
+  icedCoffee: { items: ['ice', 'icedCoffee', 'straw'], takeout: false },
+  hotTea: {items: ['teaBag', 'hotWater', 'saucer', 'spoon']},
+  icedTea: { items: ['ice', 'icedTea', 'straw'], takeout: false },
+  milkTea: {items: ['milkTeaBag', 'hotWater', 'hotMilk', 'saucer', 'spoon'], takeout: false },
+  soyMilkTea: {items: ['milkTeaBag', 'hotWater', 'hotSoyMilk', 'saucer', 'spoon'], takeout: false },
+
+  takeoutCafeLatte: { items: ['cafeLatte'], takeout: true },
+  takeoutIcedCafeLatte: { items: ['ice', 'milk', 'espresso', 'straw'], takeout: true },
+  takeoutSoyLatte: { items: ['hotSoyMilk', 'espresso'], takeout: true },
+  takeoutIcedSoyLatte: { items: ['ice', 'soyMilk', 'icedCoffee', 'straw'], takeout: true },
+  takeoutHotCoffee: { items: ['hotCoffee'], takeout: true },
+  takeoutIcedCoffee: { items: ['ice', 'icedCoffee', 'straw'], takeout: true },
+  takeoutHotTea: {items: ['teaBag', 'hotWater'], takeout: true }, 
+  takeoutIcedTea: { items: ['ice', 'icedTea', 'straw'], takeout: true },
+  takeoutMilkTea: {items: ['milkTeaBag', 'hotWater', 'hotMilk'], takeout: true },
+  takeoutSoyMilkTea: {items: ['milkTeaBag', 'hotWater', 'hotSoyMilk'], takeout: true },
+
+};
+
+const orderTexts = {
+  cafeLatte: 'カフェラテください',
+  icedCafeLatte: 'アイスカフェラテください',
+  soyLatte: '豆乳ラテください',
+  icedSoyLatte: 'アイス豆乳ラテください',
+  hotCoffee: 'ホットコーヒーください',
+  icedCoffee: 'アイスコーヒーください',
+  hotTea: 'ホットティーください',
+  icedTea: 'アイスティーください',
+  milkTea: 'ミルクティーください',
+  soyMilkTea: '豆乳ティーください',
+
+  takeoutCafeLatte: 'テイクアウトでカフェラテください',
+  takeoutIcedCafeLatte: 'テイクアウトでカフェラテください',
+  takeoutSoyLatte: 'テイクアウトで豆乳ラテください',
+  takeoutIcedSoyLatte: 'テイクアウトでアイス豆乳ラテください',
+  takeoutHotCoffee: 'テイクアウトでホットコーヒーください',
+  takeoutIcedCoffee: 'テイクアウトでアイスコーヒーください',
+  takeoutHotTea: 'テイクアウトでホットティーください',
+  takeoutIcedTea: 'テイクアウトでアイスティーください',
+  takeoutMilkTea: 'テイクアウトでミルクティーください',
+  takeoutSoyMilkTea: 'テイクアウトで豆乳ティーください',
+
+};
+
+    let isTakeout = false; // テイクアウトかどうかの状態
+
+    function setTakeout(flag) {
+     isTakeout = flag;
+     updateCupDisplay();
+    }
+
+
+    function updateCupDisplay() {
+     const cupLabel = isTakeout ? 'テイクアウトカップ' : 'カップ';
+     document.getElementById('cup').innerText = cupLabel + ': ' + cup.join(', ');
+   }
+
+    function addToCup(ingredient) {
+      cup.push(ingredient);
+      updateCupDisplay();
+    }
+
+    function startExtraction(type) {
+      const status = document.getElementById('status');
+      const btnId = type === 'espresso' ? 'espressoBtn' : 'latteBtn';
+
+      document.getElementById(btnId).disabled = true;
+      status.innerText = `☕ ${type === 'espresso' ? 'エスプレッソ' : 'カフェラテ'}抽出中...`;
+
+      setTimeout(() => {
+        status.innerText = `✅ ${type === 'espresso' ? 'エスプレッソ' : 'カフェラテ'}が抽出されました！`;
+        showExtractedButton(type);
+      }, 2000);
+    }
+
+    function showExtractedButton(type) {
+      if (extractedItems[type]) return;
+      extractedItems[type] = true;
+
+      const container = document.getElementById('extractedContainer');
+      const btn = document.createElement('button');
+      btn.innerText = type === 'espresso' ? 'エスプレッソ' : 'カフェラテ';
+      btn.onclick = () => {
+        if (!extractedItems[type]) return;
+        addToCup(type);
+        extractedItems[type] = false;
+        btn.remove();
+      };
+
+      container.appendChild(btn);
+    }
+
+    function steamMilk() {
+      const status = document.getElementById('status');
+      let index = cup.findIndex(i => i === 'milk' || i === 'soyMilk');
+
+      if (index === -1) {
+        status.innerText = '⚠ スチームできるミルクが入っていません';
+        return;
+      }
+
+      status.innerText = 'スチーム中……';
+      setTimeout(() => {
+        const original = cup[index];
+        cup[index] = original === 'milk' ? 'hotMilk' : 'hotSoyMilk';
+        status.innerText = '✅ スチーム完了！（' + (cup[index] === 'hotMilk' ? 'ホットミルク' : 'ホット豆乳') + '）';
+        updateCupDisplay();
+      }, 2000);
+    }
 
 function serveDrink() {
-  const order = ['milk', 'espresso', 'straw'];
-  if (JSON.stringify(cup) === JSON.stringify(order)) {
-    alert('正解！カフェラテ完成！');
+  const correct = correctOrders[currentOrder];
+  const isCorrectItems = JSON.stringify(cup) === JSON.stringify(correct.items);
+  const isCorrectTakeout = isTakeout === correct.takeout;
+
+  if (isCorrectItems && isCorrectTakeout) {
+    alert('正解！注文どおりにできました！');
   } else {
-    alert('ちがいます！やり直してね');
+    const cupType = correct.takeout ? 'テイクアウトカップ' : 'カップ';
+    const correctItems = correct.items.join(', ');
+    alert(`ちがいます！やり直してね\n\n正しいレシピは：\n${cupType} に ${correctItems}`);
   }
+
   cup = [];
-  document.getElementById('cup').innerText = '';
+  isTakeout = false;
+  updateCupDisplay();
+  document.getElementById('status').innerText = '';
+  document.getElementById('espressoBtn').disabled = false;
+  document.getElementById('latteBtn').disabled = false;
+  document.getElementById('extractedContainer').innerHTML = '';
+  extractedItems = {};
 }
 
-</script>
+    function setOrder(order) {
+      if (!correctOrders[order]) return;
+
+      currentOrder = order;
+      document.getElementById('customer').innerText = `お客さん「${orderTexts[order]}」`;
+
+      cup = [];
+      updateCupDisplay();
+      document.getElementById('status').innerText = '';
+      document.getElementById('espressoBtn').disabled = false;
+      document.getElementById('latteBtn').disabled = false;
+      document.getElementById('extractedContainer').innerHTML = '';
+      extractedItems = {};
+    }
+
+    const orderKeys = Object.keys(correctOrders);
+    function setRandomOrder() {
+      const randomIndex = Math.floor(Math.random() * orderKeys.length);
+      const randomOrder = orderKeys[randomIndex];
+      setOrder(randomOrder);
+    }
+
+    window.onload = () => {
+      setRandomOrder();
+    };
+  </script>
 </body>
 </html>
