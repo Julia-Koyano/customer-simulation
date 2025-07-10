@@ -292,9 +292,11 @@ html, body {
   }
 
   .quiz-page button {
-    width: 90%;
-    max-width: 300px;
-    margin: 10px auto;
+    display: inline-block;
+    width: auto;
+    max-width: none;
+    white-space: nowrap;
+    margin: 6px 8px;
   }
 
   .phrase {
@@ -318,6 +320,11 @@ html, body {
     margin-left: auto;
     margin-right: auto;
   }
+
+  #options {
+  text-align: center;
+}
+
 }
 
 
