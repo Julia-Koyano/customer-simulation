@@ -279,7 +279,7 @@ html, body {
   }
   
     .chat-bubble {
-    max-width: 90%;
+    max-width: 80%;
     margin: 8px auto;
     float: none !important;
     text-align: left !important;
