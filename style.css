@@ -245,7 +245,7 @@ button:hover {
 }
 
 #conversation {
-  max-width: 480px; /* または好きな幅 */
+  max-width: 400px; /* または好きな幅 */
   width: 100%;
   margin: 0 auto;
   height: 40vh;  /* 画面の高さの40% */
@@ -308,8 +308,9 @@ html, body {
   #conversation {
     min-height: 240px;
     max-height: 60vh;
-    padding-left: 8px;
-    padding-right: 8px;
+    max-width: 400px; 
+    padding-left: 12px;
+    padding-right: 12px;
     margin-left: auto;
     margin-right: auto;
   }
