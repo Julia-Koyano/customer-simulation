@@ -286,9 +286,22 @@ html, body {
     box-sizing: border-box;
   }
 
-  .user, .staff {
+/*   .user, .staff { 
     float: none !important;
     text-align: left !important;
+   } */
+
+    .staff {
+    float: left !important;
+    text-align: left !important;
+    max-width: 80% !important;
+    margin: 8px 0 8px 8px; /* 左寄せ寄りのマージン調整 */
+  }
+  .user {
+    float: right !important;
+    text-align: right !important;
+    max-width: 80% !important;
+    margin: 8px 8px 8px 0; /* 右寄せ寄りのマージン調整 */
   }
 
 .quiz-page button {
@@ -311,7 +324,8 @@ html, body {
   .question {
     padding: 0 12px;
   }
-  #conversation {
+
+/*   #conversation { 
     min-height: 240px;
     max-height: 60vh;
     max-width: 400px; 
@@ -319,6 +333,11 @@ html, body {
     padding-right: 12px;
     margin-left: auto;
     margin-right: auto;
+  } */
+  #conversation {
+    max-width: 100% !important;
+    padding-left: 12px;
+    padding-right: 12px;
   }
 
 }
