@@ -363,10 +363,123 @@ html, body {
     padding-right: 12px;
   }
 
+  @media (max-width: 480px) {
+  .row {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    padding: 0 12px;
+    box-sizing: border-box;
+  }
+
+  .section-box {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 12px;
+    border: 2px solid #888;
+    background-color: #fff;
+    box-sizing: border-box;
+  }
+
+  .section-label {
+    font-size: 16px;
+  }
+
+  .section-box button {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  #cup {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  #customer {
+    font-size: 16px;
+    text-align: center;
+  }
+}
+
 }
 
 
   #options {
   text-align: center;
+}
+
+/* === ゲーム画面 === */
+#customer {
+  font-size: 18px;
+  margin-bottom: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#cup {
+  margin-bottom: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#status {
+  color: green;
+  margin-bottom: 8px;
+  min-height: 20px;
+  font-size: 14px;
+}
+
+/* === ゲームの段（行） === */
+.row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* === セクションボックス === */
+.section-box {
+  border: 2px solid #888;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 160px;
+  min-height: 200px;
+  box-sizing: border-box;
+  gap: 8px;
+}
+
+.section-label {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.section-box button {
+  width: 100%;
+  font-size: 14px;
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+
+/* === 抽出後のボタン表示 === */
+#extractedContainer button {
+  margin: 0 auto;
+  width: 120px;
+  padding: 8px 14px;
+  font-size: 14px;
+}
+
+/* === 提供ボタン行 === */
+#serve-row {
+  margin-top: 16px;
 }
 
