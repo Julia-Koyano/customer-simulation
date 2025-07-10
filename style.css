@@ -163,11 +163,15 @@ button:hover {
     margin-left: auto;
     margin-right: auto;
 }
+
 .quiz-page button { 
-    display: block; 
-    width: 100%; 
-    max-width: 360px;
-} 
+  display: inline-block;  /* ← block から変更 */
+  width: auto;            /* ← 幅を中身に合わせる */
+  max-width: none;        /* ← 最大幅の制限を解除 */
+  padding: 8px 16px;      /* ← 安定した見た目に */
+  margin: 6px 8px;        /* ← 間隔を調整（中央揃えも自然に） */
+}
+
 .correct { background: #00ff3c; }
 .wrong { background: #ff0015; }
 .explanation { margin-top: 8px; font-size: 14px; color: #333; }
