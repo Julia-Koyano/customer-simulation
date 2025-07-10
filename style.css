@@ -365,7 +365,7 @@ html, body {
 
   @media (max-width: 480px) {
   .row {
-    flex-direction: column;
+    flex-direction: row;
     gap: 12px;
     width: 100%;
     padding: 0 12px;
@@ -373,7 +373,7 @@ html, body {
   }
 
   .section-box {
-    width: 100%;
+    width: calc(50% - 16px);
     max-width: 100%;
     margin-bottom: 12px;
     border: 2px solid #888;
