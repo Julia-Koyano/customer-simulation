@@ -164,13 +164,13 @@ button:hover {
     margin-right: auto;
 }
 
-.quiz-page button { 
-  display: block;
-  width: auto;            /* ← 幅を中身に合わせる */
-  max-width: none;        /* ← 最大幅の制限を解除 */
-  padding: 8px 16px;      /* ← 安定した見た目に */
-  margin: 6px 8px;        /* ← 間隔を調整（中央揃えも自然に） */
+.quiz-page button {
+  display: block;       /* ← blockに変更して縦並びに */
+  width: 100%;          /* ← 幅いっぱいに */
+  max-width: 320px;     /* ← 最大幅を制限（調整可能） */
+  margin: 10px auto;    /* ← 中央寄せと間隔 */
 }
+
 
 .correct { background: #00ff3c; }
 .wrong { background: #ff0015; }
@@ -291,13 +291,13 @@ html, body {
     text-align: left !important;
   }
 
-  .quiz-page button {
-    display: block;
-    width: auto;
-    max-width: none;
-    white-space: nowrap;
-    margin: 6px 8px;
-  }
+.quiz-page button {
+  display: block;       /* ← blockに変更して縦並びに */
+  width: 100%;          /* ← 幅いっぱいに */
+  max-width: 320px;     /* ← 最大幅を制限（調整可能） */
+  margin: 10px auto;    /* ← 中央寄せと間隔 */
+}
+
 
   .phrase {
     margin-left: 8px;
