@@ -165,7 +165,7 @@ button:hover {
 }
 
 .quiz-page button { 
-  display: inline-block;  /* ← block から変更 */
+  display: block;
   width: auto;            /* ← 幅を中身に合わせる */
   max-width: none;        /* ← 最大幅の制限を解除 */
   padding: 8px 16px;      /* ← 安定した見た目に */
@@ -292,7 +292,7 @@ html, body {
   }
 
   .quiz-page button {
-    display: inline-block;
+    display: block;
     width: auto;
     max-width: none;
     white-space: nowrap;
