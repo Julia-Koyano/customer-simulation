@@ -29,7 +29,12 @@
 
   <div id="customer">お客さん「カフェラテください」</div>
   <div id="cup">カップ: </div>
-  <div id="status"></div>
+
+    <!-- 三段目 -->
+  <div class="row" id="serve-row">
+    <button onclick="serveDrink()">提供する</button>
+    <div id="status"></div>
+  </div>
 
   <!-- 一段目 -->
   <div class="row">
@@ -87,11 +92,6 @@
  </div>
 
 </div>
-
-  <!-- 三段目 -->
-  <div class="row" id="serve-row">
-    <button onclick="serveDrink()">提供する</button>
-  </div>
 
   <script>
     let cup = [];
